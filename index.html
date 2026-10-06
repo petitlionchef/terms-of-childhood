@@ -599,8 +599,14 @@
           counter.textContent = '';
           progress.style.width = '100%';
         }
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        const resetScroll = () => {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        };
+        resetScroll();
         requestAnimationFrame(() => {
+          resetScroll();
           const heading = next.querySelector('h1, h2');
           if (heading) {
             heading.setAttribute('tabindex', '-1');
