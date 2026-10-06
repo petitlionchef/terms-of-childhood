@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f5f7">
+  <meta name="description" content="An interactive critical reflection on childhood, agency, and institutional authority.">
+  <title>Terms and Conditions of Childhood</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23162036'/%3E%3Cpath d='M18 16h28v32H18z' fill='none' stroke='%23fff' stroke-width='4'/%3E%3Cpath d='M25 26h14M25 34h14M25 42h9' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #182033;
+      --muted: #687083;
+      --line: #d8dce5;
+      --paper: #ffffff;
+      --ground: #f2f4f7;
+      --action: #163e75;
+      --action-hover: #0f315f;
+      --soft: #eef3fa;
+      --warning: #9a3c2e;
+      --shadow: 0 18px 50px rgba(23, 31, 49, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--ground); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, transparent calc(50% - 321px), rgba(22, 62, 117, .05) calc(50% - 321px), rgba(22, 62, 117, .05) calc(50% - 319px), transparent calc(50% - 319px)),
+        var(--ground);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.62;
+    }
+
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: var(--action); text-underline-offset: .2em; }
+    a:hover { color: var(--action-hover); }
+
+    .shell {
+      width: min(100%, 680px);
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      min-height: 3.65rem;
+      padding: .9rem clamp(1.25rem, 5vw, 2.75rem);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(255,255,255,.96);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .topbar-back {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--action);
+      min-height: 2.5rem;
+      margin: -.45rem 0;
+      padding: .45rem .15rem;
+      font: inherit;
+      font-size: .88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .topbar-back:hover { color: var(--action-hover); }
+    .topbar-back[hidden] { display: none; }
+
+    .wordmark {
+      font-size: .78rem;
+      font-weight: 760;
+      letter-spacing: .095em;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+
+    .counter {
+      color: var(--muted);
+      font-size: .78rem;
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      height: 3px;
+      background: #e9ebf0;
+      position: sticky;
+      top: 3.65rem;
+      z-index: 5;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: var(--action);
+      transition: width .35s ease;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .screen {
+      display: none;
+      flex: 1;
+      padding: clamp(2rem, 7vw, 4.25rem) clamp(1.35rem, 7vw, 3.8rem) max(2rem, env(safe-area-inset-bottom));
+      animation: enter .28s ease both;
+    }
+    .screen.active { display: flex; flex-direction: column; }
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .screen { animation: none; }
+      .progress-bar { transition: none; }
+    }
+
+    .eyebrow {
+      margin: 0 0 .85rem;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 750;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: -.025em;
+      line-height: 1.16;
+      color: #11182a;
+    }
+    h1 { margin: 0 0 .75rem; font-size: clamp(2.1rem, 8vw, 3.25rem); }
+    h2 { margin: 0 0 1.8rem; font-size: clamp(1.75rem, 6vw, 2.5rem); }
+    h3 { margin: 1.65rem 0 .45rem; font-size: 1.08rem; letter-spacing: 0; }
+    p { margin: 0 0 1rem; }
+
+    .effective {
+      margin: 0 0 2.4rem;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .legal-copy { max-width: 36rem; }
+    .legal-copy p { color: #343b4c; }
+
+    .actions {
+      margin-top: auto;
+      padding-top: 2.3rem;
+    }
+
+    .primary {
+      width: 100%;
+      min-height: 3.35rem;
+      border: 0;
+      border-radius: .45rem;
+      padding: .85rem 1.2rem;
+      background: var(--action);
+      color: white;
+      font-weight: 720;
+      cursor: pointer;
+      transition: background .16s ease, transform .16s ease, opacity .16s ease;
+    }
+    .primary:hover:not(:disabled) { background: var(--action-hover); }
+    .primary:active:not(:disabled) { transform: translateY(1px); }
+    .primary:disabled { opacity: .38; cursor: not-allowed; }
+
+    .text-button {
+      display: inline-flex;
+      border: 0;
+      padding: .2rem 0;
+      background: transparent;
+      color: var(--action);
+      font-weight: 680;
+      text-decoration: underline;
+      text-underline-offset: .24em;
+      cursor: pointer;
+    }
+
+    .check-row {
+      display: grid;
+      grid-template-columns: 1.35rem 1fr;
+      gap: .75rem;
+      align-items: start;
+      margin-bottom: 1.1rem;
+      color: #2f3748;
+      cursor: pointer;
+    }
+    .check-row input {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin: .18rem 0 0;
+      accent-color: var(--action);
+    }
+
+    .completion-mark {
+      width: 3rem;
+      height: 3rem;
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.25rem;
+      border-radius: 50%;
+      background: var(--soft);
+      color: var(--action);
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+    .statement {
+      margin: 1.65rem 0 2.35rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--action);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.24rem;
+      line-height: 1.45;
+    }
+
+    .audio-card {
+      margin: .9rem 0 1rem;
+      padding: 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: .65rem;
+      background: #fafbfc;
+    }
+    .audio-title { margin: 0; font-weight: 750; }
+    .audio-meta { margin: .15rem 0 1rem; color: var(--muted); font-size: .88rem; }
+    .audio-card audio {
+      width: 100%;
+      min-height: 3.25rem;
+      display: block;
+      color-scheme: light;
+    }
+
+    details {
+      margin-top: .75rem;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    summary {
+      padding: 1rem 0;
+      color: var(--action);
+      font-weight: 720;
+      cursor: pointer;
+    }
+    .transcript {
+      padding: .2rem 0 1.2rem;
+      color: #343b4c;
+    }
+    .transcript p { margin-bottom: 1rem; }
+
+    .reference-link { margin-top: 1.25rem; }
+    .reference-list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .reference-list li {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+    }
+    .reference-list em { font-family: Georgia, "Times New Roman", serif; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      padding: 1.25rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(17, 24, 39, .56);
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      width: min(100%, 430px);
+      max-height: calc(100dvh - 2.5rem);
+      overflow: auto;
+      padding: 1.55rem;
+      border-radius: .75rem;
+      background: white;
+      box-shadow: 0 24px 70px rgba(0,0,0,.22);
+    }
+    .modal h2 { margin-bottom: .75rem; font-size: 1.65rem; }
+    .modal p { color: #454c5d; }
+    .radio-group { margin: 1.25rem 0; }
+    .radio-row {
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+      padding: .58rem 0;
+      cursor: pointer;
+    }
+    .radio-row input {
+      width: 1.15rem;
+      height: 1.15rem;
+      margin-top: .18rem;
+      accent-color: var(--action);
+    }
+    .modal .text-button { margin-top: .9rem; }
+
+    :focus-visible {
+      outline: 3px solid rgba(22, 62, 117, .34);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 520px) {
+      body { background: var(--paper); }
+      .shell { box-shadow: none; }
+      .topbar { min-height: 3.35rem; }
+      .progress-track { top: 3.35rem; }
+      .screen { padding-top: 2rem; }
+      h1 { font-size: 2.25rem; }
+      h2 { font-size: 1.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="wordmark" id="wordmark">Terms of Childhood</div>
+      <button class="topbar-back" id="topbar-back" type="button" hidden aria-label="Return to the previous page">← Back</button>
+      <div class="counter" id="counter" aria-live="polite"></div>
+    </header>
+    <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progress"></div></div>
+
+    <main id="main">
+      <section class="screen active" data-screen="intro" aria-labelledby="intro-title">
+        <p class="eyebrow">Introduction</p>
+        <h1 id="intro-title">Terms and Conditions of Childhood</h1>
+        <p class="effective">Effective Date: October 2026</p>
+        <div class="legal-copy">
+          <p>Please read these Terms carefully.</p>
+          <p>These Terms govern your access to the spaces, resources, technologies, and opportunities made available during childhood (the “Services”).</p>
+          <p>By using the Services, you agree to these Terms and any additional rules that may apply.</p>
+          <p>If you cannot legally provide consent, a parent, guardian, school, or other authorized adult may accept these Terms on your behalf.</p>
+          <p>If you do not agree, you may not continue.</p>
+        </div>
+        <div class="actions">
+          <label class="check-row">
+            <input type="checkbox" id="intro-check">
+            <span>I have read and agree to the Terms and Conditions.</span>
+          </label>
+          <button class="primary" id="intro-next" disabled>Continue</button>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="1" aria-labelledby="s1-title">
+        <p class="eyebrow">Section 1 of 7</p>
+        <h2 id="s1-title">1. User Status and Access to Services</h2>
+        <div class="legal-copy">
+          <h3>1.1 User Status</h3>
+          <p>Under these Terms, you are considered a Child User until you meet the legal and institutional requirements for managing your own access.</p>
+          <h3>1.2 Providers</h3>
+          <p>Access may be created, purchased, approved, or managed on your behalf by parents, guardians, schools, institutions, or platforms (collectively, the “Providers”).</p>
+          <h3>1.3 Limited Access</h3>
+          <p>Providers grant you limited and revocable access to the Services. They may determine which Services are available, when they may be used, and for how long. Access does not guarantee ownership or continued availability.</p>
+        </div>
+        <div class="actions"><button class="primary next" data-next="2">Next</button></div>
+      </section>
+
+      <section class="screen" data-screen="2" aria-labelledby="s2-title">
+        <p class="eyebrow">Section 2 of 7</p>
+        <h2 id="s2-title">2. User Responsibilities and Acceptable Use</h2>
+        <div class="legal-copy">
+          <h3>2.1 Responsible Use</h3>
+          <p>You agree to use the Services in ways considered appropriate for your age, setting, and intended purpose. You are responsible for following applicable time limits and for stopping use when directed.</p>
+          <h3>2.2 Service Features</h3>
+          <p>The Services may include notifications, recommendations, rewards, streaks, autoplay, or other features intended to encourage continued participation. You remain responsible for managing your time and attention while using these features.</p>
+          <h3>2.3 Conditions of Use</h3>
+          <p>Access may depend on completing schoolwork, household responsibilities, or other activities determined by your Providers.</p>
+        </div>
+        <div class="actions"><button class="primary next" data-next="3">Next</button></div>
+      </section>
+
+      <section class="screen" data-screen="3" aria-labelledby="s3-title">
+        <p class="eyebrow">Section 3 of 7</p>
+        <h2 id="s3-title">3. Monitoring and Management</h2>
+        <div class="legal-copy">
+          <h3>3.1 Monitoring</h3>
+          <p>Providers may monitor your access, activity, screen time, location, or communications when considered necessary for safety, learning, security, or compliance with applicable rules. Monitoring may include filters, activity records, device-management tools, classroom observation, or other available methods.</p>
+          <h3>3.2 Notice</h3>
+          <p>Monitoring may occur automatically. Separate notice is not required each time information is collected or reviewed.</p>
+          <h3>3.3 Use of Information</h3>
+          <p>Information obtained through monitoring may be used to adjust access, provide support, investigate possible violations, or determine appropriate consequences.</p>
+        </div>
+        <div class="actions"><button class="primary next" data-next="4">Next</button></div>
+      </section>
+
+      <section class="screen" data-screen="4" aria-labelledby="s4-title">
+        <p class="eyebrow">Section 4 of 7</p>
+        <h2 id="s4-title">4. Restrictions and Consequences</h2>
+        <div class="legal-copy">
+          <h3>4.1 Violations</h3>
+          <p>If you do not follow these Terms or other applicable rules, Providers may take action they consider appropriate. Actions may include a reminder, temporary restriction, device confiscation, loss of privileges, suspension of access, or removal from an activity or setting.</p>
+          <h3>4.2 Determining Consequences</h3>
+          <p>Providers may consider the context, frequency, seriousness, intent, and possible effects of a violation. Immediate action may be taken when a Provider believes that safety, security, learning, or the well-being of others is at risk. Repeated violations may result in increased restrictions or consequences.</p>
+        </div>
+        <div class="actions"><button class="primary next" data-next="5">Next</button></div>
+      </section>
+
+      <section class="screen" data-screen="5" aria-labelledby="s5-title">
+        <p class="eyebrow">Section 5 of 7</p>
+        <h2 id="s5-title">5. Requests, Exceptions, and Appeals</h2>
+        <div class="legal-copy">
+          <h3>5.1 Requesting an Exception</h3>
+          <p>You may request an exception or adjustment when a rule affects your health, accessibility, safety, education, family responsibilities, or other circumstances. You may be asked to provide an explanation or supporting information.</p>
+          <h3>5.2 Requesting a Review</h3>
+          <p>You may ask why access was restricted or a consequence was imposed. You may also provide information that you believe was not considered. A Provider will review the request, but review does not guarantee that the original decision will be changed.</p>
+          <h3>5.3 Adult Authorization</h3>
+          <p>A parent, guardian, or other authorized adult may be required to submit or approve a request on your behalf.</p>
+          <button class="text-button" id="request-review">Request a Review</button>
+        </div>
+        <div class="actions"><button class="primary next" data-next="6">Next</button></div>
+      </section>
+
+      <section class="screen" data-screen="6" aria-labelledby="s6-title">
+        <p class="eyebrow">Section 6 of 7</p>
+        <h2 id="s6-title">6. Changes to These Terms</h2>
+        <div class="legal-copy">
+          <h3>6.1 Updates</h3>
+          <p>Providers may revise these Terms to reflect changes in your age, circumstances, needs, available technologies, institutional policies, or applicable laws.</p>
+          <h3>6.2 Notice of Changes</h3>
+          <p>Material changes may be communicated through conversation, written notice, school policy, account settings, or an updated posting. Changes considered necessary for safety, security, or legal compliance may take effect without advance notice.</p>
+          <h3>6.3 Continued Participation</h3>
+          <p>Your continued access to or participation in the Services after new Terms take effect constitutes acceptance of those changes. If you do not accept the revised Terms, your access may be limited or discontinued.</p>
+        </div>
+        <div class="actions"><button class="primary next" data-next="7">Next</button></div>
+      </section>
+
+      <section class="screen" data-screen="7" aria-labelledby="s7-title">
+        <p class="eyebrow">Section 7 of 7</p>
+        <h2 id="s7-title">7. Authority and Feedback</h2>
+        <div class="legal-copy">
+          <h3>7.1 Applicable Authority</h3>
+          <p>Different Providers may establish different rules for the Services they manage. If rules conflict, the terms established by the Provider responsible for the current space, device, account, or activity will apply.</p>
+          <h3>7.2 Feedback and Requests</h3>
+          <p>You may submit questions, relevant information, preferences, or proposed changes for review. Providers may consider this input when making a decision. Submission does not transfer decision-making authority or require the requested action to be taken.</p>
+          <h3>7.3 Final Authority</h3>
+          <p>Until you meet the applicable requirements for independent decision-making, Providers retain final authority over access, restrictions, exceptions, and revisions to these Terms.</p>
+        </div>
+        <div class="actions">
+          <label class="check-row">
+            <input type="checkbox" id="final-check">
+            <span>I acknowledge that I have reviewed these Terms.</span>
+          </label>
+          <button class="primary" id="complete" disabled>Complete Agreement</button>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="reflection" aria-labelledby="reflection-title">
+        <div class="completion-mark" aria-hidden="true">✓</div>
+        <p class="eyebrow">Agreement Complete</p>
+        <h1 id="reflection-title">Your acceptance has been recorded.</h1>
+        <p class="statement">The agreement is complete.<br>The questions are not.</p>
+        <p>Listen to the creator’s reflection.</p>
+
+        <div class="audio-card">
+          <p class="audio-title">Who Writes the Terms of Childhood?</p>
+          <p class="audio-meta">Audio reflection · 7 min 37 sec</p>
+          <audio controls preload="metadata">
+            <source src="who-writes-the-terms.m4a" type="audio/mp4">
+            Your browser does not support audio playback. <a href="who-writes-the-terms.m4a">Download the recording</a>.
+          </audio>
+        </div>
+
+        <details>
+          <summary>Read the Transcript</summary>
+          <div class="transcript">
+            <p>A few minutes ago, you agreed to the Terms and Conditions of Childhood.</p>
+            <p>You accepted them before you knew exactly what they contained. Refusing them would have meant that you could not continue.</p>
+            <p>As you moved through the agreement, you were given access to spaces, resources, and technologies. But that access remained limited and revocable. You were expected to use the Services responsibly. Your activity could be monitored, and violations could lead to consequences. You could request an exception, but an authorized adult might need to approve it. The Terms could also be revised, and your continued participation would count as acceptance.</p>
+            <p>Finally, you were invited to provide feedback, while final authority remained with the Providers.</p>
+            <p>The website borrows the structure and language of actual Terms of Use. Childhood is not literally a service, and children do not enter it by clicking a checkbox. That is precisely where the comparison becomes meaningful. Children enter families, schools, legal systems, and technological environments whose conditions already exist. They participate in these worlds without having written their original terms.</p>
+            <p>The central question of this project is therefore:</p>
+            <p><strong>What kind of participation is possible when the conditions of participation have already been written by someone else?</strong></p>
+            <p>Wendy Luttrell’s work provides my primary framework for approaching this question. She describes children as active interpreters and inventors of culture, rather than incomplete adults who simply receive the meanings adults give them. At the same time, she understands child-adult relationships as interdependent and relational, but structured by unequal power.</p>
+            <p>These ideas explain the tension built into the Terms. The user is not completely passive. The user reads, interprets, responds, follows some conditions, and may negotiate others. But this participation occurs within categories and procedures created by people and institutions with greater authority.</p>
+            <p>For me, agency does not mean unrestricted choice, complete independence, or the absence of rules. It is the situated capacity to interpret and act within relationships and conditions that one did not create alone.</p>
+            <p>A child might comply with a rule, question it, negotiate an exception, reinterpret its purpose, find a way around it, or use a resource differently from what adults intended. These actions are not all forms of resistance, and they do not all have the same consequences. But they show that children participate in the worlds that also govern them.</p>
+            <p>The website deliberately contrasts the forms of participation recognized by the Providers with forms of agency that exceed those procedures.</p>
+            <p>Near the end of the Terms, you were allowed to submit questions, preferences, information, and proposed changes. However, submitting feedback did not guarantee that a decision would change. The agreement also gave you no way to transform the Terms themselves. That absence is deliberate. The interface represents what the Providers are prepared to receive, not the full range of children’s agency.</p>
+            <p>This distinction connects with Haeny Yoon’s account of children’s civic participation. Children’s participation does not begin only when adults invite them into a formal process. It is already taking place through everyday conversations, play, relationships, disagreement, and collective action. Children may comply with, question, reinterpret, negotiate, reproduce, or seek to transform the conditions they inherit. But institutions do not recognize all of these actions, and not all of them produce visible change.</p>
+            <p>The unfinished request for an exception makes this boundary tangible. The Terms told you that you could request a review, but the request could not proceed without adult authorization. Such a procedure may make decisions more consistent. But it may also place another barrier between having a reason and having that reason recognized.</p>
+            <p>This does not mean that all rules or adult decisions are inherently oppressive. Clear rules can sometimes limit arbitrary judgment. Adults also have responsibilities that should not simply be transferred to children in the name of autonomy.</p>
+            <p>The more useful questions are how rules are created, how they are enforced, whether exceptions are genuinely accessible, and whether the people governed by them can influence their revision.</p>
+            <p>This is where bell hooks’s connection between theory and practice becomes important to me. Identifying that power exists is not the end of the analysis. Theory should help us make better judgments in practice. It should help us distinguish between a necessary boundary and an unnecessarily punitive system, between a meaningful procedure and a procedural barrier, and between allowing children to speak and allowing their participation to have consequences.</p>
+            <p>The Terms and Conditions of Childhood is not an argument for childhood without adults, rules, or responsibilities. It is an invitation to examine how those responsibilities are distributed and how authority is exercised.</p>
+            <p>Children do not write the original terms of childhood. But they are not merely governed by them either. They interpret and respond to the conditions they inherit, including in ways that institutions may not recognize.</p>
+            <p>The question left open by this agreement is not only who writes the Terms.</p>
+            <p>It is whether, when, and how children can participate in shaping the terms that govern their lives.</p>
+          </div>
+        </details>
+
+        <p class="reference-link"><button class="text-button" id="show-references">View References</button></p>
+      </section>
+
+      <section class="screen" data-screen="references" aria-labelledby="references-title">
+        <p class="eyebrow">Project Sources</p>
+        <h1 id="references-title">References and Design Sources</h1>
+        <p>This project draws on course readings about childhood, agency, participation, and institutional power.</p>
+
+        <h3>Course Readings</h3>
+        <ul class="reference-list">
+          <li>hooks, b. (2006). The heartbeat of cultural revolution. In <em>Outlaw culture: Resisting representations</em> (pp. 1–8). Routledge.</li>
+          <li>Luttrell, W. (2020). <em>Children framing childhoods: Working-class kids’ visions of care</em>. Policy Press.</li>
+          <li>Meiners, E. R. (2016). <em>For the children? Protecting innocence in a carceral state</em>. University of Minnesota Press.</li>
+          <li>Yoon, H. S. (2020). Critically literate citizenship: Moments and movements in second grade. <em>Journal of Literacy Research, 52</em>(3), 293–315. <a href="https://doi.org/10.1177/1086296X20939557" target="_blank" rel="noopener">View article</a></li>
+        </ul>
+
+        <h3>Design Sources</h3>
+        <p>The structure and legal register of this project were informed by the following Terms of Use.</p>
+        <ul class="reference-list">
+          <li>Roblox Corporation. (2026). <em>Roblox terms of use</em>. <a href="https://en.help.roblox.com/hc/en-us/articles/115004647846-Roblox-Terms-of-Use" target="_blank" rel="noopener">View source</a></li>
+          <li>The LEGO Group. (n.d.). <em>Terms of use</em>. Retrieved September 21, 2026, from <a href="https://www.lego.com/en-us/legal/terms-of-use" target="_blank" rel="noopener">LEGO.com</a></li>
+        </ul>
+
+        <div class="actions"><button class="primary" id="back-reflection">Back to Reflection</button></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="review-modal" role="presentation">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="review-title">
+      <div id="review-step-one">
+        <h2 id="review-title">Request a Review</h2>
+        <p>To continue, please select an authorized adult.</p>
+        <div class="radio-group" role="radiogroup" aria-label="Authorized adult">
+          <label class="radio-row"><input type="radio" name="adult" value="parent"><span>Parent or guardian</span></label>
+          <label class="radio-row"><input type="radio" name="adult" value="school"><span>Teacher or school administrator</span></label>
+          <label class="radio-row"><input type="radio" name="adult" value="other"><span>Other authorized adult</span></label>
+        </div>
+        <button class="primary" id="continue-request" disabled>Continue Request</button>
+        <button class="text-button" id="cancel-request">Cancel</button>
+      </div>
+      <div id="review-step-two" hidden>
+        <h2>Authorization Required</h2>
+        <p>Your request has not been submitted.</p>
+        <p>An authorized adult must review and approve the request before it can be considered.</p>
+        <button class="primary" id="return-terms">Return to Terms</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const screens = [...document.querySelectorAll('.screen')];
+      const progress = document.getElementById('progress');
+      const counter = document.getElementById('counter');
+      const wordmark = document.getElementById('wordmark');
+      const topbarBack = document.getElementById('topbar-back');
+      const main = document.getElementById('main');
+      let current = 'intro';
+
+      const previousScreen = {
+        '1': 'intro',
+        '2': '1',
+        '3': '2',
+        '4': '3',
+        '5': '4',
+        '6': '5',
+        '7': '6',
+        reflection: '7',
+        references: 'reflection'
+      };
+
+      function showScreen(name) {
+        const next = screens.find(s => s.dataset.screen === String(name));
+        if (!next) return;
+        screens.forEach(s => s.classList.remove('active'));
+        next.classList.add('active');
+        current = String(name);
+        const hasPrevious = Object.prototype.hasOwnProperty.call(previousScreen, current);
+        topbarBack.hidden = !hasPrevious;
+        wordmark.hidden = hasPrevious;
+        const number = Number(name);
+        if (Number.isFinite(number)) {
+          counter.textContent = `${number} / 7`;
+          progress.style.width = `${number / 7 * 100}%`;
+        } else if (name === 'intro') {
+          counter.textContent = '';
+          progress.style.width = '0%';
+        } else {
+          counter.textContent = '';
+          progress.style.width = '100%';
+        }
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        requestAnimationFrame(() => {
+          const heading = next.querySelector('h1, h2');
+          if (heading) {
+            heading.setAttribute('tabindex', '-1');
+            heading.focus({ preventScroll: true });
+          }
+        });
+      }
+
+      const introCheck = document.getElementById('intro-check');
+      const introNext = document.getElementById('intro-next');
+      introCheck.addEventListener('change', () => introNext.disabled = !introCheck.checked);
+      introNext.addEventListener('click', () => showScreen('1'));
+      document.querySelectorAll('.next').forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.next)));
+      topbarBack.addEventListener('click', () => {
+        const previous = previousScreen[current];
+        if (previous) showScreen(previous);
+      });
+
+      const finalCheck = document.getElementById('final-check');
+      const complete = document.getElementById('complete');
+      finalCheck.addEventListener('change', () => complete.disabled = !finalCheck.checked);
+      complete.addEventListener('click', () => showScreen('reflection'));
+
+      document.getElementById('show-references').addEventListener('click', () => showScreen('references'));
+      document.getElementById('back-reflection').addEventListener('click', () => showScreen('reflection'));
+
+      const modal = document.getElementById('review-modal');
+      const stepOne = document.getElementById('review-step-one');
+      const stepTwo = document.getElementById('review-step-two');
+      const continueRequest = document.getElementById('continue-request');
+      let lastFocus;
+
+      function openReview() {
+        lastFocus = document.activeElement;
+        stepOne.hidden = false;
+        stepTwo.hidden = true;
+        document.querySelectorAll('input[name="adult"]').forEach(i => i.checked = false);
+        continueRequest.disabled = true;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => document.querySelector('input[name="adult"]').focus());
+      }
+      function closeReview() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+        if (lastFocus) lastFocus.focus();
+      }
+
+      document.getElementById('request-review').addEventListener('click', openReview);
+      document.getElementById('cancel-request').addEventListener('click', closeReview);
+      document.querySelectorAll('input[name="adult"]').forEach(input => input.addEventListener('change', () => continueRequest.disabled = false));
+      continueRequest.addEventListener('click', () => {
+        stepOne.hidden = true;
+        stepTwo.hidden = false;
+        requestAnimationFrame(() => stepTwo.querySelector('button').focus());
+      });
+      document.getElementById('return-terms').addEventListener('click', closeReview);
+      modal.addEventListener('click', event => { if (event.target === modal) closeReview(); });
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && modal.classList.contains('open')) closeReview();
+        if (event.key !== 'Tab' || !modal.classList.contains('open')) return;
+        const focusable = [...modal.querySelectorAll('button:not([disabled]), input:not([disabled])')].filter(el => el.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      });
+    })();
+  </script>
+</body>
+</html>
